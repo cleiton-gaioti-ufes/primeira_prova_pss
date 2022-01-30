@@ -1,6 +1,8 @@
 
 package com.gestaodefuncionarios.model;
 
+import java.time.LocalDate;
+
 public interface IMetodoCalculaBonus {
-    public void calcular(Funcionario funcionario);
+    public Bonus calcular(Funcionario funcionario, LocalDate data);
 }

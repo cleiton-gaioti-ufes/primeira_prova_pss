@@ -1,15 +1,26 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
+ */
 package com.gestaodefuncionarios.view;
 
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-public class BuscarFuncionarioView extends javax.swing.JFrame {
+/**
+ *
+ * @author cleit
+ */
+public class BuscarFuncionarioView extends javax.swing.JInternalFrame {
+
+    /**
+     * Creates new form BuscarFuncionariosView
+     */
     public BuscarFuncionarioView() {
         initComponents();
     }
-
-    @SuppressWarnings("unchecked")
+ 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -19,12 +30,9 @@ public class BuscarFuncionarioView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableFuncionarios = new javax.swing.JTable();
         jButtonFechar = new javax.swing.JButton();
-        jButtonVisualizar = new javax.swing.JButton();
-        jButtonHistorico = new javax.swing.JButton();
         jButtonNovo = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Buscar Funcionário");
+        jButtonHistorico = new javax.swing.JButton();
+        jButtonVisualizar = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Nome");
@@ -52,11 +60,11 @@ public class BuscarFuncionarioView extends javax.swing.JFrame {
 
         jButtonFechar.setText("Fechar");
 
-        jButtonVisualizar.setText("Visualizar");
+        jButtonNovo.setText("Novo");
 
         jButtonHistorico.setText("Histórico de  bônus");
 
-        jButtonNovo.setText("Novo");
+        jButtonVisualizar.setText("Visualizar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,7 +81,7 @@ public class BuscarFuncionarioView extends javax.swing.JFrame {
                         .addComponent(jButtonHistorico)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonVisualizar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -98,7 +106,7 @@ public class BuscarFuncionarioView extends javax.swing.JFrame {
                     .addComponent(jButtonVisualizar)
                     .addComponent(jButtonHistorico)
                     .addComponent(jButtonNovo))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -107,6 +115,7 @@ public class BuscarFuncionarioView extends javax.swing.JFrame {
     private void jTextFieldNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNomeActionPerformed
         // TODO ad your handling code here:
     }//GEN-LAST:event_jTextFieldNomeActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBuscar;

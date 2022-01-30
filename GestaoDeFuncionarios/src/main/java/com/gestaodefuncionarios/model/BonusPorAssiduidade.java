@@ -6,19 +6,19 @@ import java.time.LocalDate;
 public class BonusPorAssiduidade implements IMetodoCalculaBonus {
 
     @Override
-    public void calcular(Funcionario funcionario) {
+    public Bonus calcular(Funcionario funcionario, LocalDate data) {
         int nroFaltas = funcionario.getFaltas();
-        double valorBonus;
+        var valorBonus = 0.0;
         
         if(nroFaltas == 0) {
-            valorBonus = funcionario.getSalario() * 0.1;
+            valorBonus = funcionario.getSalarioBase() * 0.1;
         } else if(nroFaltas > 1 && nroFaltas <= 3) {
-            valorBonus = funcionario.getSalario() * 0.05;
+            valorBonus = funcionario.getSalarioBase() * 0.05;
         } else {
-            valorBonus = funcionario.getSalario() * 0.01;
+            valorBonus = funcionario.getSalarioBase() * 0.01;
         }
         
-        funcionario.add(new Bonus("Bônus por assiduidade", LocalDate.now(), valorBonus));
+        return new Bonus("Bônus por assiduidade", data, valorBonus);
     }
     
 }

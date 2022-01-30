@@ -6,12 +6,13 @@ import java.time.LocalDate;
 public class BonusNormal implements IMetodoCalculaBonus {
 
     @Override
-    public void calcular(Funcionario funcionario) {
+    public Bonus calcular(Funcionario funcionario, LocalDate data) {
         if(funcionario.isBonusNormal()) {
-            var valorBonus = funcionario.getSalario() * 0.05;
+            var valorBonus = funcionario.getSalarioBase() * 0.05;
             
-            funcionario.getBonusRecebidos().add(new Bonus("Bônus normal", LocalDate.now(), valorBonus));
+            return new Bonus("Bônus normal", data, valorBonus);
         }
+        return null;
     }
     
 }

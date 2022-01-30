@@ -3,13 +3,14 @@ package com.gestaodefuncionarios.model;
 
 import java.time.LocalDate;
 
+
 public class BonusAuxilioTransporte implements IMetodoCalculaBonus {
 
     @Override
-    public void calcular(Funcionario funcionario) {
+    public Bonus calcular(Funcionario funcionario, LocalDate data) {
         if(funcionario.hasAuxilioTransporte()) {
             var valorBonus = 0.0;
-            var salario = funcionario.getSalario();
+            var salario = funcionario.getSalarioBase();
             
             if(salario <= 1500) {
                 valorBonus = salario * 0.10;
@@ -21,8 +22,9 @@ public class BonusAuxilioTransporte implements IMetodoCalculaBonus {
                 valorBonus = salario * 0.01;
             }
             
-            funcionario.getBonusRecebidos().add(new Bonus("Funcionário do mês", LocalDate.now(), valorBonus));
+            return new Bonus("Auxílio transporte", data, valorBonus);
         }
+        return null;
     }
     
 }

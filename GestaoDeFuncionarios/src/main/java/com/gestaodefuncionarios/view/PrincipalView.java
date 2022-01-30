@@ -1,7 +1,12 @@
 package com.gestaodefuncionarios.view;
 
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JDesktopPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.JToggleButton;
 
 public class PrincipalView extends javax.swing.JFrame {
 
@@ -9,21 +14,51 @@ public class PrincipalView extends javax.swing.JFrame {
         initComponents();
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        desktop = new javax.swing.JDesktopPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTextPanePersistencia = new javax.swing.JTextPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextPaneQtdFuncionarios = new javax.swing.JTextPane();
+        jToggleButtonPersistencia = new javax.swing.JToggleButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenuFuncionario = new javax.swing.JMenu();
         jMenuItemBuscar = new javax.swing.JMenuItem();
         jMenuItemNovo = new javax.swing.JMenuItem();
         jMenuSalario = new javax.swing.JMenu();
         jMenuItemCalcular = new javax.swing.JMenuItem();
-        jMenuFerramentas = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de gestão de pessoas");
-        setPreferredSize(new java.awt.Dimension(600, 400));
+
+        javax.swing.GroupLayout desktopLayout = new javax.swing.GroupLayout(desktop);
+        desktop.setLayout(desktopLayout);
+        desktopLayout.setHorizontalGroup(
+            desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 651, Short.MAX_VALUE)
+        );
+        desktopLayout.setVerticalGroup(
+            desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 325, Short.MAX_VALUE)
+        );
+
+        jTextPane1.setEditable(false);
+        jTextPane1.setText("Versão 1.0");
+        jScrollPane2.setViewportView(jTextPane1);
+
+        jTextPanePersistencia.setEditable(false);
+        jTextPanePersistencia.setText("Persistência de log em ");
+        jScrollPane4.setViewportView(jTextPanePersistencia);
+
+        jTextPaneQtdFuncionarios.setEditable(false);
+        jTextPaneQtdFuncionarios.setText("Funcionários cadastrados: ");
+        jScrollPane3.setViewportView(jTextPaneQtdFuncionarios);
+
+        jToggleButtonPersistencia.setText("Txt");
 
         jMenuFuncionario.setText("Funcionário");
 
@@ -42,38 +77,53 @@ public class PrincipalView extends javax.swing.JFrame {
 
         jMenuBar2.add(jMenuSalario);
 
-        jMenuFerramentas.setText("Ferramentas");
-        jMenuBar2.add(jMenuFerramentas);
-
         setJMenuBar(jMenuBar2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 592, Short.MAX_VALUE)
+            .addComponent(desktop)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToggleButtonPersistencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 384, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(desktop)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jToggleButtonPersistencia)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane desktop;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenu jMenuFerramentas;
     private javax.swing.JMenu jMenuFuncionario;
     private javax.swing.JMenuItem jMenuItemBuscar;
     private javax.swing.JMenuItem jMenuItemCalcular;
     private javax.swing.JMenuItem jMenuItemNovo;
     private javax.swing.JMenu jMenuSalario;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JTextPane jTextPanePersistencia;
+    private javax.swing.JTextPane jTextPaneQtdFuncionarios;
+    private javax.swing.JToggleButton jToggleButtonPersistencia;
     // End of variables declaration//GEN-END:variables
-
-    public JMenu getjMenuFerramentas() {
-        return jMenuFerramentas;
-    }
 
     public JMenuItem getjMenuItemBuscar() {
         return jMenuItemBuscar;
@@ -85,5 +135,21 @@ public class PrincipalView extends javax.swing.JFrame {
 
     public JMenuItem getjMenuItemNovo() {
         return jMenuItemNovo;
+    }
+
+    public JDesktopPane getDesktop() {
+        return desktop;
+    }
+
+    public JTextPane getjTextPanePersistencia() {
+        return jTextPanePersistencia;
+    }
+
+    public JTextPane getjTextPaneQtdFuncionarios() {
+        return jTextPaneQtdFuncionarios;
+    }
+
+    public JToggleButton getjToggleButtonPersistencia() {
+        return jToggleButtonPersistencia;
     }
 }
