@@ -2,7 +2,7 @@ package com.gestaodefuncionarios.model;
 
 import java.time.LocalDate;
 
-public class HistoricoBonus {
+public final class HistoricoBonus {
     
     private LocalDate data;
     private String cargo;
@@ -16,7 +16,7 @@ public class HistoricoBonus {
         setValor(valor);
     }
 
-    private void setData(LocalDate data) {
+    private final void setData(LocalDate data) {
         if(data == null) {
 
             throw new RuntimeException("Data inválida!");
@@ -26,11 +26,11 @@ public class HistoricoBonus {
         }
     }
 
-    public LocalDate getData() {
+    public final LocalDate getData() {
         return this.data;
     }
 
-    private void setCargo(String cargo) {
+    private final void setCargo(String cargo) {
         if(cargo.isBlank() || cargo.isEmpty()) {
 
             throw new RuntimeException("Cargo inválido!");
@@ -39,11 +39,11 @@ public class HistoricoBonus {
         }
     }
 
-    public String getCargo() {
+    public final String getCargo() {
         return this.cargo;
     }
 
-    private void setTipoBonus(String tipoBonus) {
+    private final void setTipoBonus(String tipoBonus) {
         if(tipoBonus.isBlank() || tipoBonus.isEmpty()) {
 
             throw new RuntimeException("Bonus inválido!");
@@ -52,11 +52,11 @@ public class HistoricoBonus {
         }
     }
 
-    public String getTipoBonus() {
+    public final String getTipoBonus() {
         return this.tipoBonus;
     }
 
-    private void setValor(double valor) {
+    private final void setValor(double valor) {
         if(valor <= 0) {
             throw new RuntimeException("Valor inválido!");
         } else {
@@ -64,7 +64,7 @@ public class HistoricoBonus {
         }
     }
 
-    public double getValor() {
+    public final double getValor() {
         return this.valor;
     }
 }

@@ -1,10 +1,7 @@
 package com.gestaodefuncionarios.view;
 
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JDesktopPane;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
 

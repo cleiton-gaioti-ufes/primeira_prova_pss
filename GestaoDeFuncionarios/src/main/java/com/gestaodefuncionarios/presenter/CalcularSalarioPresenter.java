@@ -3,6 +3,7 @@ package com.gestaodefuncionarios.presenter;
 import com.gestaodefuncionarios.collection.FuncionarioCollection;
 import com.gestaodefuncionarios.dao.BonusDAO;
 import com.gestaodefuncionarios.dao.FuncionarioDAO;
+import com.gestaodefuncionarios.factory.PersistenciaLog;
 import com.gestaodefuncionarios.view.CalcularSalarioView;
 
 import java.awt.HeadlessException;
@@ -14,6 +15,7 @@ import java.time.format.DateTimeParseException;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -26,10 +28,12 @@ public class CalcularSalarioPresenter {
     private final DefaultTableModel tableModelFuncionarios;
     private final FuncionarioDAO funcionarioDAO;
     private final BonusDAO bonusDAO;
+    private final JToggleButton btnLog;
 
-    public CalcularSalarioPresenter(JDesktopPane desktop) {
+    public CalcularSalarioPresenter(JDesktopPane desktop, JToggleButton btnLog) {
         this.funcionarioDAO = new FuncionarioDAO();
         this.bonusDAO = new BonusDAO();
+        this.btnLog = btnLog;
         
         try {
             
@@ -38,6 +42,8 @@ public class CalcularSalarioPresenter {
         } catch (SQLException ex) {
             
             JOptionPane.showMessageDialog(view, "Falha ao consultar funcionario: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+
+            PersistenciaLog.gravarFalha(btnLog.isSelected(), "Falha ao consultar funcionario");
             
         }
         
@@ -64,6 +70,8 @@ public class CalcularSalarioPresenter {
                 calcular();
             } catch (HeadlessException | SQLException ex) {
                 JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+
+                PersistenciaLog.gravarFalha(btnLog.isSelected(), ex.getMessage());
             }
         });
 
@@ -128,13 +136,15 @@ public class CalcularSalarioPresenter {
                         }
                 );
 
-                view.getjTableCalcularSalarios().setModel(tableModelFuncionarios);
-
             } catch (SQLException ex) {
 
                 throw new RuntimeException("Falha ao calcular salário do funcionario " + f.getNome() + ":" + ex.getMessage());
             }
         });
+
+        PersistenciaLog.gravarCalculoDeSalarioFuncionario(btnLog.isSelected(), this.funcionarios);
+
+        view.getjTableCalcularSalarios().setModel(tableModelFuncionarios);
         
         DefaultTableCellRenderer centro = new DefaultTableCellRenderer();
         centro.setHorizontalAlignment(SwingConstants.CENTER);

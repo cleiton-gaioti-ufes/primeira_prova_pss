@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public final class ConnectionSQLite {
 
-    private static final String URL = "jdbc:sqlite:db/funcionariosdb";
+    private static final String URL = "jdbc:sqlite:db/funcionarios.sqlite";
     
     public static Connection connect() throws SQLException {
         

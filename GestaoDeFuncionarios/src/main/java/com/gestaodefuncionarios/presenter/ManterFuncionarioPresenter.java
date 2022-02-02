@@ -1,6 +1,7 @@
 package com.gestaodefuncionarios.presenter;
 
 import com.gestaodefuncionarios.dao.FuncionarioDAO;
+import com.gestaodefuncionarios.factory.PersistenciaLog;
 import com.gestaodefuncionarios.model.enums.Cargo;
 import com.gestaodefuncionarios.model.Funcionario;
 import com.gestaodefuncionarios.model.enums.Graduacao;
@@ -12,17 +13,21 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import javax.swing.JToggleButton;
 
 public class ManterFuncionarioPresenter {
 
     private ManterFuncionarioView view;
     private final FuncionarioDAO funcionarioDAO;
+    private final JToggleButton btnLog;
 
-    public ManterFuncionarioPresenter(JDesktopPane desktop) {
+    public ManterFuncionarioPresenter(JDesktopPane desktop, JToggleButton btnLog) {
 
         this.funcionarioDAO = new FuncionarioDAO();
 
         this.view = new ManterFuncionarioView();
+
+        this.btnLog = btnLog;
 
         view.getjButtonFechar().addActionListener((e) -> {
             view.dispose();
@@ -38,11 +43,13 @@ public class ManterFuncionarioPresenter {
         view.setVisible(true);
     }
 
-    public ManterFuncionarioPresenter(JDesktopPane desktop, Funcionario funcionario) {
+    public ManterFuncionarioPresenter(JDesktopPane desktop, Funcionario funcionario, JToggleButton btnLog) {
 
         this.funcionarioDAO = new FuncionarioDAO();
 
         this.view = new ManterFuncionarioView();
+
+        this.btnLog = btnLog;
 
         view.getjButtonFechar().addActionListener((e) -> {
             view.dispose();
@@ -87,21 +94,26 @@ public class ManterFuncionarioPresenter {
                 funcionarioDAO.remove(funcionario);
 
                 JOptionPane.showMessageDialog(view, "Funcionário excluído com sucesso!");
+
+                PersistenciaLog.gravarRemocaoFuncionario(btnLog.isSelected(), funcionario.getNome());
+
+
                 clear();
 
             } catch (SQLException e) {
 
                 JOptionPane.showMessageDialog(view, "Não foi possivel excluir o funcionario " + funcionario.getNome(),
-                        "Erro ao inserir funcionário", JOptionPane.ERROR_MESSAGE);
+                        "Erro ao excluir funcionário", JOptionPane.ERROR_MESSAGE);
+
+                PersistenciaLog.gravarFalha(btnLog.isSelected(), "Erro ao excluir funcionário" + funcionario.getNome());
+
 
             }
         }
 
     }
 
-    private Funcionario criarFuncionario() {
-        try {
-
+    private Funcionario criarFuncionario() throws RuntimeException {
             var cargo = view.getjComboBoxCargo().getSelectedIndex();
             var nome = view.getjTextFieldNome().getText();
             var bonusNormal = view.getjComboBoxBonus().getSelectedIndex() == 1;
@@ -116,26 +128,26 @@ public class ManterFuncionarioPresenter {
                     Graduacao.toEnum(graduacao), auxilioTransporte);
 
             return novo;
-
-        } catch (RuntimeException exc) {
-
-            JOptionPane.showMessageDialog(view, exc.getMessage());
-
-        }
-
-        return null;
     }
 
     private void salvar(Funcionario old) {
         try {
+
             var novo = criarFuncionario();
 
             funcionarioDAO.update(novo, old);
 
             JOptionPane.showMessageDialog(view, "Funcionário editado com sucesso ", "Editado com sucesso", JOptionPane.INFORMATION_MESSAGE);
 
+            PersistenciaLog.gravarAlteracaoFuncionario(btnLog.isSelected(), novo.getNome());
+
             setModoVisualizacao(novo, false);
-        } catch (SQLException ex) {
+
+        } catch (SQLException | RuntimeException e) {
+            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(view, "Erro ao editar funcionário!", "Erro ao editar funcionário", JOptionPane.ERROR_MESSAGE);
+
+            PersistenciaLog.gravarFalha(btnLog.isSelected(), "Erro ao editar funcionário");
 
         }
     }
@@ -150,11 +162,14 @@ public class ManterFuncionarioPresenter {
 
             JOptionPane.showMessageDialog(view, "Funcionário salvo com sucesso ", "Salvo com sucesso",
                     JOptionPane.INFORMATION_MESSAGE);
+            
+            PersistenciaLog.gravarCriacaoFuncionario(btnLog.isSelected(), novo.getNome());
+
             clear();
 
-        } catch (SQLException exc) {
+        } catch (SQLException e) {
 
-            if (exc.getSQLState().equals("2067")) {
+            if (e.getSQLState().equals("2067")) {
 
                 JOptionPane.showMessageDialog(view, "Funcionário já cadastrado", "Erro ao inserir funcionário",
                         JOptionPane.ERROR_MESSAGE);
@@ -162,9 +177,11 @@ public class ManterFuncionarioPresenter {
             } else {
 
                 JOptionPane.showMessageDialog(view,
-                        "Erro ao inserir funcionário!\nCódigo do Erro: " + exc.getSQLState(),
+                        "Erro ao inserir funcionário!\nCódigo do Erro: " + e.getSQLState(),
                         "Erro ao inserir funcionário", JOptionPane.ERROR_MESSAGE);
 
+                PersistenciaLog.gravarFalha(btnLog.isSelected(), "Erro ao inserir funcionário");
+                
             }
 
         }

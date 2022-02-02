@@ -1,0 +1,24 @@
+Bônus consultado para o funcionário Handaniel.
+Bônus consultado para o funcionário Cleiton Gaioti.
+Funcionário Cleiton Gaioti alterado.
+Salário calculado para o(s) funcionário(s): [
+	Cleiton Gaioti
+	Handaniel
+	]
+Falha ao realizar a operação: Erro ao editar funcionário.
+Bônus consultado para o funcionário Handaniel.
+Falha ao realizar a operação: Erro ao editar funcionário.
+Falha ao realizar a operação: Erro ao editar funcionário.
+Falha ao realizar a operação: Erro ao editar funcionário.
+Falha ao realizar a operação: Erro ao editar funcionário.
+Falha ao realizar a operação: Erro ao editar funcionário.
+Falha ao realizar a operação: Erro ao editar funcionário.
+Falha ao realizar a operação: Erro ao editar funcionário.
+Falha ao realizar a operação: Erro ao editar funcionário.
+Falha ao realizar a operação: Erro ao editar funcionário.
+Funcionário Daniel Hand alterado.
+Funcionário Daniel Hand alterado.
+Funcionário Daniel Hand alterado.
+Falha ao realizar a operação: Erro ao consultar funcionários.
+Falha ao realizar a operação: Erro ao consultar funcionários.
+Falha ao realizar a operação: Erro ao consultar funcionários.

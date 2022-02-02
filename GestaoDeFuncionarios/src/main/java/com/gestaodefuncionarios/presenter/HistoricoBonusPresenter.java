@@ -8,9 +8,11 @@ import java.util.List;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import javax.swing.JToggleButton;
 import javax.swing.table.DefaultTableModel;
 
 import com.gestaodefuncionarios.dao.FuncionarioDAO;
+import com.gestaodefuncionarios.factory.PersistenciaLog;
 import com.gestaodefuncionarios.model.HistoricoBonus;
 import com.gestaodefuncionarios.view.HistoricoBonusView;
 
@@ -20,7 +22,7 @@ public class HistoricoBonusPresenter {
     private final DefaultTableModel tableModelHistorico;
     private final FuncionarioDAO funcionarioDAO;
 
-    public HistoricoBonusPresenter(JDesktopPane desktop, int idFuncionario) {
+    public HistoricoBonusPresenter(JDesktopPane desktop, int idFuncionario, JToggleButton btnLog) {
         this.view = new HistoricoBonusView();
 
         funcionarioDAO = new FuncionarioDAO();
@@ -63,6 +65,7 @@ public class HistoricoBonusPresenter {
             
             JOptionPane.showMessageDialog(view, "Falha ao consultar funcionario: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 
+            PersistenciaLog.gravarFalha(btnLog.isSelected(), "Falha ao consultar funcionario");
         }
 
         this.view.setVisible(true);

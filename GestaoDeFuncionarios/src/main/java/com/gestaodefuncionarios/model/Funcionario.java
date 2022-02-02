@@ -135,6 +135,8 @@ public final class Funcionario implements Serializable {
     }
 
     public void setSalarioBase(String salario) {
+        salario = salario.replace(",", ".");
+
         try {
 
             setSalarioBase(Double.valueOf(salario));

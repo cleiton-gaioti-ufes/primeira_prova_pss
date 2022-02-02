@@ -2,14 +2,14 @@ package com.gestaodefuncionarios.presenter;
 
 import com.gestaodefuncionarios.collection.FuncionarioCollection;
 import com.gestaodefuncionarios.dao.FuncionarioDAO;
+import com.gestaodefuncionarios.factory.PersistenciaLog;
 import com.gestaodefuncionarios.view.BuscarFuncionarioView;
 
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -22,13 +22,16 @@ public class BuscarFuncionarioPresenter {
     private final DefaultTableModel tableModelFuncionarios;
     private final FuncionarioDAO funcionarioDAO;
     private final JDesktopPane desktop;
+    private final JToggleButton btnLog;
 
-    public BuscarFuncionarioPresenter(JDesktopPane desktop) {
+    public BuscarFuncionarioPresenter(JDesktopPane desktop, JToggleButton btnLog) {
         this.funcionarioDAO = new FuncionarioDAO();
 
         this.view = new BuscarFuncionarioView();
 
         this.desktop = desktop;
+
+        this.btnLog = btnLog;
 
         try {
 
@@ -36,8 +39,9 @@ public class BuscarFuncionarioPresenter {
 
         } catch (SQLException ex) {
 
-            Logger.getLogger(BuscarFuncionarioPresenter.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(view, "Erro ao consultar funcionários");
 
+            PersistenciaLog.gravarFalha(btnLog.isSelected(), "Erro ao consultar funcionários");
         }
 
         this.tableModelFuncionarios = new DefaultTableModel(
@@ -66,7 +70,7 @@ public class BuscarFuncionarioPresenter {
         });
 
         view.getjButtonNovo().addActionListener((e) -> {
-            new ManterFuncionarioPresenter(view.getDesktopPane());
+            new ManterFuncionarioPresenter(view.getDesktopPane(), this.btnLog);
         });
 
         view.getjButtonVisualizar().addActionListener((e) -> {
@@ -126,7 +130,7 @@ public class BuscarFuncionarioPresenter {
             JOptionPane.showMessageDialog(view, "Falha ao consultar funcionario: " + ex.getMessage(), "Erro",
                     JOptionPane.ERROR_MESSAGE);
 
-            this.view.dispose();
+            PersistenciaLog.gravarFalha(btnLog.isSelected(), "Erro ao consultar funcionários");
         }
     }
 
@@ -141,8 +145,9 @@ public class BuscarFuncionarioPresenter {
 
             var id = Integer.parseInt(this.view.getjTableFuncionarios().getValueAt(row, 0).toString());
 
-            new HistoricoBonusPresenter(desktop, id);
+            new HistoricoBonusPresenter(desktop, id, btnLog);
 
+            PersistenciaLog.gravarConsultaBonusFuncionario(btnLog.isSelected(), this.view.getjTableFuncionarios().getValueAt(row, 1).toString());
         }
     }
 
@@ -161,12 +166,14 @@ public class BuscarFuncionarioPresenter {
 
                 var funcionario = funcionarioDAO.getFuncionarioById(id);
 
-                new ManterFuncionarioPresenter(this.desktop, funcionario);
+                new ManterFuncionarioPresenter(this.desktop, funcionario, this.btnLog);
 
             } catch (SQLException ex) {
 
                 JOptionPane.showMessageDialog(view, "Falha ao consultar funcionario: " + ex.getMessage(), "Erro",
                         JOptionPane.ERROR_MESSAGE);
+
+                PersistenciaLog.gravarFalha(btnLog.isSelected(), "Falha ao consultar funcionario");
 
             }
 

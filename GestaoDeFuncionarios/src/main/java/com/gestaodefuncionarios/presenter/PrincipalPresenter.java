@@ -4,6 +4,8 @@ import com.gestaodefuncionarios.dao.BonusDAO;
 import com.gestaodefuncionarios.dao.FuncionarioDAO;
 import com.gestaodefuncionarios.factory.ConnectionSQLite;
 import com.gestaodefuncionarios.view.PrincipalView;
+
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -14,7 +16,6 @@ public class PrincipalPresenter {
 
     public static void main(String[] args) throws ClassNotFoundException {
         view = new PrincipalView();
-
         init();
     }
 
@@ -41,19 +42,28 @@ public class PrincipalPresenter {
         }
 
         view.getjMenuItemBuscar().addActionListener((ActionEvent e) -> {
-            new BuscarFuncionarioPresenter(view.getDesktop());
+            new BuscarFuncionarioPresenter(view.getDesktop(), view.getjToggleButtonPersistencia());
         });
 
         view.getjMenuItemCalcular().addActionListener((ActionEvent e) -> {
-            new CalcularSalarioPresenter(view.getDesktop());
+            new CalcularSalarioPresenter(view.getDesktop(), view.getjToggleButtonPersistencia());
         });
 
         view.getjMenuItemNovo().addActionListener((e) -> {
-            new ManterFuncionarioPresenter(view.getDesktop());
+            new ManterFuncionarioPresenter(view.getDesktop(), view.getjToggleButtonPersistencia());
         });
 
         view.getjToggleButtonPersistencia().addActionListener(e -> {
-            trocarPersistencia();
+
+            if(view.getjToggleButtonPersistencia().isSelected()) {
+
+                view.getjToggleButtonPersistencia().setText("Json");
+
+            } else {
+
+                view.getjToggleButtonPersistencia().setText("Txt");
+
+            }
         });
 
         view.getjTextPaneQtdFuncionarios().setText("Funcionários cadastrados: " + qtd);
@@ -61,14 +71,5 @@ public class PrincipalPresenter {
 
         view.setVisible(true);
         view.setLocationRelativeTo(view.getParent());
-    }
-
-    private static void trocarPersistencia() {
-        if(view.getjToggleButtonPersistencia().getText().toLowerCase().equals("txt")) {
-            view.getjToggleButtonPersistencia().setText("Json");
-        } else {
-            view.getjToggleButtonPersistencia().setText("Txt");
-            // TODO: criar classes para gravar as informações de log usando o principio do aberto fechado
-        }
     }
 }
