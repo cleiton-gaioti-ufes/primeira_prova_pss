@@ -77,6 +77,8 @@ public class BuscarFuncionarioPresenter {
             visualizar();
         });
 
+        view.setSize(690, 550);
+        view.setLocation(0, 255);
         view.setVisible(true);
         desktop.add(view);
     }
@@ -102,10 +104,18 @@ public class BuscarFuncionarioPresenter {
         DefaultTableCellRenderer centro = new DefaultTableCellRenderer();
         centro.setHorizontalAlignment(SwingConstants.CENTER);
 
+        DefaultTableCellRenderer right = new DefaultTableCellRenderer();
+        right.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        DefaultTableCellRenderer left = new DefaultTableCellRenderer();
+        left.setHorizontalAlignment(SwingConstants.LEFT);
+
         this.view.getjTableFuncionarios().setModel(tableModelFuncionarios);
-        this.view.getjTableFuncionarios().getColumnModel().getColumn(0).setCellRenderer(centro);
+        this.view.getjTableFuncionarios().getColumnModel().getColumn(0).setCellRenderer(right);
+        this.view.getjTableFuncionarios().getColumnModel().getColumn(1).setCellRenderer(left);
         this.view.getjTableFuncionarios().getColumnModel().getColumn(2).setCellRenderer(centro);
-        this.view.getjTableFuncionarios().getColumnModel().getColumn(4).setCellRenderer(centro);
+        this.view.getjTableFuncionarios().getColumnModel().getColumn(3).setCellRenderer(left);
+        this.view.getjTableFuncionarios().getColumnModel().getColumn(4).setCellRenderer(right);
     }
 
     private void buscar() {

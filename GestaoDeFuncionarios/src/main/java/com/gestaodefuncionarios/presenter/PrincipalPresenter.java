@@ -5,7 +5,6 @@ import com.gestaodefuncionarios.dao.FuncionarioDAO;
 import com.gestaodefuncionarios.factory.ConnectionSQLite;
 import com.gestaodefuncionarios.view.PrincipalView;
 
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -68,7 +67,8 @@ public class PrincipalPresenter {
 
         view.getjTextPaneQtdFuncionarios().setText("Funcionários cadastrados: " + qtd);
         view.getjTextPanePersistencia().setText("Persistência de log em");
-
+        
+        view.setSize(1400, 900);
         view.setVisible(true);
         view.setLocationRelativeTo(view.getParent());
     }

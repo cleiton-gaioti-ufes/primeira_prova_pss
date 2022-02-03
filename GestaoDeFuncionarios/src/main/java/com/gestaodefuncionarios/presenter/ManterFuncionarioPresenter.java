@@ -39,6 +39,8 @@ public class ManterFuncionarioPresenter {
 
         inicializarComponents(false);
 
+        view.setSize(690, 250);
+        view.setLocation(0, 0);
         desktop.add(view);
         view.setVisible(true);
     }
@@ -71,6 +73,8 @@ public class ManterFuncionarioPresenter {
 
         setModoVisualizacao(funcionario, false);
 
+        view.setSize(690, 250);
+        view.setLocation(0, 402);
         desktop.add(view);
         view.setVisible(true);
     }
@@ -134,7 +138,7 @@ public class ManterFuncionarioPresenter {
         try {
 
             var novo = criarFuncionario();
-
+            
             funcionarioDAO.update(novo, old);
 
             JOptionPane.showMessageDialog(view, "Funcionário editado com sucesso ", "Editado com sucesso", JOptionPane.INFORMATION_MESSAGE);

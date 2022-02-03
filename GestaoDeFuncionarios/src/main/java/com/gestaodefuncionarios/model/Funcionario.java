@@ -135,7 +135,7 @@ public final class Funcionario implements Serializable {
     }
 
     public void setSalarioBase(String salario) {
-        salario = salario.replace(",", ".");
+        salario = salario.replace(".", "").replace(",", ".");
 
         try {
 
@@ -201,7 +201,7 @@ public final class Funcionario implements Serializable {
     }
 
     public String getGraduacaoString() {
-        return Graduacao.toEnum(cargo).getDescricao();
+        return Graduacao.toEnum(graduacao).getDescricao();
     }
 
     public int getGraduacaoId() {

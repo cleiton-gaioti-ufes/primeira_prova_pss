@@ -49,7 +49,7 @@ public class CalcularSalarioPresenter {
         
         this.tableModelFuncionarios = new DefaultTableModel(
                 new Object[][]{},
-                new String[]{"Funcionário", "Data", "Salário Base (R$)", "Bônus (R$)", "Salário (R$)"}
+                new String[]{"Funcionário", "Admissão", "Salário Base (R$)", "Bônus (R$)", "Salário (R$)"}
         ) {
             @Override
             public boolean isCellEditable(final int row, final int column) {
@@ -79,6 +79,8 @@ public class CalcularSalarioPresenter {
             view.dispose();
         });
 
+        view.setSize(690, 400);
+        view.setLocation(695, 0);
         desktop.add(view);
         view.setVisible(true);
     }
@@ -102,15 +104,18 @@ public class CalcularSalarioPresenter {
             );
         });
         
-        DefaultTableCellRenderer centro = new DefaultTableCellRenderer();
-        centro.setHorizontalAlignment(SwingConstants.CENTER);
+        DefaultTableCellRenderer center = new DefaultTableCellRenderer();
+        center.setHorizontalAlignment(SwingConstants.CENTER);
+
+        DefaultTableCellRenderer right = new DefaultTableCellRenderer();
+        right.setHorizontalAlignment(SwingConstants.RIGHT);
         
         this.view.getjTableCalcularSalarios().setModel(tableModelFuncionarios);
 
-        this.view.getjTableCalcularSalarios().getColumnModel().getColumn(1).setCellRenderer(centro);
-        this.view.getjTableCalcularSalarios().getColumnModel().getColumn(2).setCellRenderer(centro);
-        this.view.getjTableCalcularSalarios().getColumnModel().getColumn(3).setCellRenderer(centro);
-        this.view.getjTableCalcularSalarios().getColumnModel().getColumn(4).setCellRenderer(centro);
+        this.view.getjTableCalcularSalarios().getColumnModel().getColumn(1).setCellRenderer(center);
+        this.view.getjTableCalcularSalarios().getColumnModel().getColumn(2).setCellRenderer(right);
+        this.view.getjTableCalcularSalarios().getColumnModel().getColumn(3).setCellRenderer(center);
+        this.view.getjTableCalcularSalarios().getColumnModel().getColumn(4).setCellRenderer(center);
     }
         
         
@@ -146,14 +151,18 @@ public class CalcularSalarioPresenter {
 
         view.getjTableCalcularSalarios().setModel(tableModelFuncionarios);
         
-        DefaultTableCellRenderer centro = new DefaultTableCellRenderer();
-        centro.setHorizontalAlignment(SwingConstants.CENTER);
+        DefaultTableCellRenderer center = new DefaultTableCellRenderer();
+        center.setHorizontalAlignment(SwingConstants.CENTER);
+
+        DefaultTableCellRenderer right = new DefaultTableCellRenderer();
+        right.setHorizontalAlignment(SwingConstants.RIGHT);
+
         
         this.view.getjTableCalcularSalarios().setModel(tableModelFuncionarios);
-        this.view.getjTableCalcularSalarios().getColumnModel().getColumn(1).setCellRenderer(centro);
-        this.view.getjTableCalcularSalarios().getColumnModel().getColumn(2).setCellRenderer(centro);
-        this.view.getjTableCalcularSalarios().getColumnModel().getColumn(3).setCellRenderer(centro);
-        this.view.getjTableCalcularSalarios().getColumnModel().getColumn(4).setCellRenderer(centro);
+        this.view.getjTableCalcularSalarios().getColumnModel().getColumn(1).setCellRenderer(center);
+        this.view.getjTableCalcularSalarios().getColumnModel().getColumn(2).setCellRenderer(right);
+        this.view.getjTableCalcularSalarios().getColumnModel().getColumn(3).setCellRenderer(right);
+        this.view.getjTableCalcularSalarios().getColumnModel().getColumn(4).setCellRenderer(right);
     }
 
     private void calcular() throws HeadlessException, SQLException {

@@ -9,6 +9,8 @@ import java.util.List;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import com.gestaodefuncionarios.dao.FuncionarioDAO;
@@ -27,6 +29,10 @@ public class HistoricoBonusPresenter {
 
         funcionarioDAO = new FuncionarioDAO();
 
+        this.view.getjButtonFechar().addActionListener(e -> {
+            this.view.dispose();
+        });
+
         this.tableModelHistorico = new DefaultTableModel(
             new Object[][] {}, 
             new String[] {"Data do Cálculo", "Cargo", "Tipo de Bônus", "Valor do Bônus"}
@@ -41,6 +47,7 @@ public class HistoricoBonusPresenter {
         this.tableModelHistorico.setNumRows(0);
 
         try {
+            var funcionario = funcionarioDAO.getFuncionarioById(idFuncionario);
 
             List<HistoricoBonus> historico = funcionarioDAO.getHistoricoDeBonus(idFuncionario);
             
@@ -59,7 +66,22 @@ public class HistoricoBonusPresenter {
                 );
             }
 
+            this.view.getjLabelNomeFuncionario().setText(funcionario.getNome() + " - " + funcionario.getCargoString());
+
+            DefaultTableCellRenderer center = new DefaultTableCellRenderer();
+            center.setHorizontalAlignment(SwingConstants.CENTER);
+    
+            DefaultTableCellRenderer right = new DefaultTableCellRenderer();
+            right.setHorizontalAlignment(SwingConstants.RIGHT);
+    
+            DefaultTableCellRenderer left = new DefaultTableCellRenderer();
+            left.setHorizontalAlignment(SwingConstants.LEFT);
+            
             this.view.getjTableHistorico().setModel(this.tableModelHistorico);
+            this.view.getjTableHistorico().getColumnModel().getColumn(0).setCellRenderer(center);
+            this.view.getjTableHistorico().getColumnModel().getColumn(1).setCellRenderer(left);
+            this.view.getjTableHistorico().getColumnModel().getColumn(2).setCellRenderer(left);
+            this.view.getjTableHistorico().getColumnModel().getColumn(3).setCellRenderer(right);
 
         } catch (SQLException ex) {
             
@@ -68,6 +90,8 @@ public class HistoricoBonusPresenter {
             PersistenciaLog.gravarFalha(btnLog.isSelected(), "Falha ao consultar funcionario");
         }
 
+        view.setSize(690, 400);
+        view.setLocation(695, 405);
         this.view.setVisible(true);
         desktop.add(view);
     }

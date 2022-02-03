@@ -21,7 +21,7 @@ public class BonusPorGraduacao implements IMetodoCalculaBonus {
             valorBonus = funcionario.getSalarioBase() * 0.09;
         }
 
-        return new Bonus("Funcionário do mês", data, valorBonus);
+        return new Bonus("Bônus por graduação", data, valorBonus);
         
     }
 

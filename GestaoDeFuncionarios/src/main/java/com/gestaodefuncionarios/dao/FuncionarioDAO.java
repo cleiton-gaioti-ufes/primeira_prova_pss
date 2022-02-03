@@ -111,7 +111,7 @@ public class FuncionarioDAO {
                 + "fl_bonus_normal = ?, "
                 + "fl_auxilio_transporte = ? "
                 + "WHERE nome = ? AND idade = ? AND dt_admissao = ?";
-
+        System.out.println(newFunc.getCargoString());
         try (
             Connection conn = ConnectionSQLite.connect(); 
             PreparedStatement ps = conn.prepareStatement(query)
@@ -132,7 +132,7 @@ public class FuncionarioDAO {
             ps.setInt(13, oldFunc.getIdade());
             ps.setDate(14, Date.valueOf(oldFunc.getAdmissao()));
             
-            ps.execute();
+            ps.executeUpdate();
             
             ps.close();
             conn.close();
@@ -142,7 +142,7 @@ public class FuncionarioDAO {
     public FuncionarioCollection getFuncionarios() throws SQLException {
         FuncionarioCollection funcionarios = new FuncionarioCollection();
 
-        var query = "SELECT * FROM funcionario";
+        var query = "SELECT * FROM funcionario ORDER BY nome";
 
         try (
             Connection conn = ConnectionSQLite.connect(); 
@@ -180,7 +180,7 @@ public class FuncionarioDAO {
     public FuncionarioCollection getFuncionariosByName(String nome) throws SQLException {
         FuncionarioCollection funcionarios = new FuncionarioCollection();
 
-        var query = "SELECT * FROM funcionario WHERE nome LIKE ? ";
+        var query = "SELECT * FROM funcionario WHERE nome LIKE ? ORDER BY nome";
 
         try (
             Connection conn = ConnectionSQLite.connect(); 

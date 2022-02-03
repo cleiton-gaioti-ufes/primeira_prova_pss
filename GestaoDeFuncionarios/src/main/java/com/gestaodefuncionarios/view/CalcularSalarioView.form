@@ -33,7 +33,7 @@
                       <Component id="jFormattedTextFieldDataDoCalculo" min="-2" pref="100" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane1" pref="638" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="648" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jButtonFechar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
@@ -53,13 +53,13 @@
                   <Component id="jFormattedTextFieldDataDoCalculo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="228" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" pref="252" max="32767" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButtonFechar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonCalcular" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="33" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
