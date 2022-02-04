@@ -67,7 +67,7 @@ public class BuscarFuncionarioView extends javax.swing.JInternalFrame {
 
         jButtonVisualizar.setText("Visualizar");
 
-        jButtonRefresh.setText("Refresh");
+        jButtonRefresh.setText("Atualizar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

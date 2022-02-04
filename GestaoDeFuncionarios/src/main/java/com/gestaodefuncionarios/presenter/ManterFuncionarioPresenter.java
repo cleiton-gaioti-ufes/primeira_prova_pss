@@ -148,7 +148,7 @@ public class ManterFuncionarioPresenter {
 
             PersistenciaLog.gravarAlteracaoFuncionario(log, novo.getNome());
 
-            setModoVisualizacao(novo, false);
+            view.dispose();
 
         } catch (SQLException | RuntimeException e) {
             System.out.println(e.getMessage());
