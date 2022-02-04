@@ -6,28 +6,30 @@ import com.gestaodefuncionarios.model.enums.Cargo;
 import com.gestaodefuncionarios.model.Funcionario;
 import com.gestaodefuncionarios.model.enums.Graduacao;
 import com.gestaodefuncionarios.view.ManterFuncionarioView;
+
+import java.awt.Color;
+import java.awt.Graphics;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.format.DateTimeFormatter;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
-import javax.swing.JToggleButton;
 
 public class ManterFuncionarioPresenter {
 
     private ManterFuncionarioView view;
     private final FuncionarioDAO funcionarioDAO;
-    private final JToggleButton btnLog;
+    private final int log;
 
-    public ManterFuncionarioPresenter(JDesktopPane desktop, JToggleButton btnLog) {
+    public ManterFuncionarioPresenter(JDesktopPane desktop, int log) {
 
         this.funcionarioDAO = new FuncionarioDAO();
 
         this.view = new ManterFuncionarioView();
-
-        this.btnLog = btnLog;
+        this.log = log;
 
         view.getjButtonFechar().addActionListener((e) -> {
             view.dispose();
@@ -45,13 +47,12 @@ public class ManterFuncionarioPresenter {
         view.setVisible(true);
     }
 
-    public ManterFuncionarioPresenter(JDesktopPane desktop, Funcionario funcionario, JToggleButton btnLog) {
+    public ManterFuncionarioPresenter(JDesktopPane desktop, Funcionario funcionario, int log) {
 
         this.funcionarioDAO = new FuncionarioDAO();
 
         this.view = new ManterFuncionarioView();
-
-        this.btnLog = btnLog;
+        this.log = log;
 
         view.getjButtonFechar().addActionListener((e) -> {
             view.dispose();
@@ -92,24 +93,24 @@ public class ManterFuncionarioPresenter {
                 options,
                 options[1]);
 
-        if (resposta == 1) {
+        if (resposta == 0) {
             try {
 
                 funcionarioDAO.remove(funcionario);
 
                 JOptionPane.showMessageDialog(view, "Funcionário excluído com sucesso!");
 
-                PersistenciaLog.gravarRemocaoFuncionario(btnLog.isSelected(), funcionario.getNome());
+                PersistenciaLog.gravarRemocaoFuncionario(log, funcionario.getNome());
 
-
-                clear();
+                PrincipalPresenter.atualizarQuantidade();
+                view.dispose();
 
             } catch (SQLException e) {
 
                 JOptionPane.showMessageDialog(view, "Não foi possivel excluir o funcionario " + funcionario.getNome(),
                         "Erro ao excluir funcionário", JOptionPane.ERROR_MESSAGE);
 
-                PersistenciaLog.gravarFalha(btnLog.isSelected(), "Erro ao excluir funcionário" + funcionario.getNome());
+                PersistenciaLog.gravarFalha(log, "Erro ao excluir funcionário" + funcionario.getNome());
 
 
             }
@@ -143,7 +144,9 @@ public class ManterFuncionarioPresenter {
 
             JOptionPane.showMessageDialog(view, "Funcionário editado com sucesso ", "Editado com sucesso", JOptionPane.INFORMATION_MESSAGE);
 
-            PersistenciaLog.gravarAlteracaoFuncionario(btnLog.isSelected(), novo.getNome());
+            PrincipalPresenter.atualizarQuantidade();
+
+            PersistenciaLog.gravarAlteracaoFuncionario(log, novo.getNome());
 
             setModoVisualizacao(novo, false);
 
@@ -151,7 +154,7 @@ public class ManterFuncionarioPresenter {
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(view, "Erro ao editar funcionário!", "Erro ao editar funcionário", JOptionPane.ERROR_MESSAGE);
 
-            PersistenciaLog.gravarFalha(btnLog.isSelected(), "Erro ao editar funcionário");
+            PersistenciaLog.gravarFalha(log, "Erro ao editar funcionário");
 
         }
     }
@@ -167,9 +170,10 @@ public class ManterFuncionarioPresenter {
             JOptionPane.showMessageDialog(view, "Funcionário salvo com sucesso ", "Salvo com sucesso",
                     JOptionPane.INFORMATION_MESSAGE);
             
-            PersistenciaLog.gravarCriacaoFuncionario(btnLog.isSelected(), novo.getNome());
+            PrincipalPresenter.atualizarQuantidade();
+            PersistenciaLog.gravarCriacaoFuncionario(log, novo.getNome());
 
-            clear();
+            this.view.dispose();
 
         } catch (SQLException e) {
 
@@ -184,10 +188,12 @@ public class ManterFuncionarioPresenter {
                         "Erro ao inserir funcionário!\nCódigo do Erro: " + e.getSQLState(),
                         "Erro ao inserir funcionário", JOptionPane.ERROR_MESSAGE);
 
-                PersistenciaLog.gravarFalha(btnLog.isSelected(), "Erro ao inserir funcionário");
+                PersistenciaLog.gravarFalha(log, "Erro ao inserir funcionário");
                 
             }
 
+        } catch(RuntimeException e) {
+            JOptionPane.showMessageDialog(view, e.getMessage());
         }
 
     }
@@ -215,11 +221,37 @@ public class ManterFuncionarioPresenter {
         this.view.getjTextFieldIdade().setEditable(editar);
         this.view.getjTextFieldNome().setEditable(editar);
         this.view.getjTextFieldSalario().setEditable(editar);
-
+        
         view.getjButtonSalvar().setEnabled(editar);
         view.getjButtonExcluir().setEnabled(!editar);
         view.getjButtonEditar().setEnabled(!editar);
+        
+        if(!editar) {
+            this.view.getjComboBoxBonus().setRenderer(new DefaultListCellRenderer() {
+                @Override
+                public void paint(Graphics g) {
+                    setForeground(Color.black);
+                    super.paint(g);
+                }
+            });
 
+            this.view.getjComboBoxCargo().setRenderer(new DefaultListCellRenderer() {
+                @Override
+                public void paint(Graphics g) {
+                    setForeground(Color.black);
+                    super.paint(g);
+                }
+            });
+
+            this.view.getjComboBoxGraduacao().setRenderer(new DefaultListCellRenderer() {
+                @Override
+                public void paint(Graphics g) {
+                    setForeground(Color.black);
+                    super.paint(g);
+                }
+            });
+        }
+        
         if (!editar) {
             this.view.getjComboBoxCargo().setSelectedIndex(funcionario.getCargoId());
             this.view.getjTextFieldFaltas().setText(String.valueOf(funcionario.getFaltas()));
@@ -234,18 +266,5 @@ public class ManterFuncionarioPresenter {
             DecimalFormat df = new DecimalFormat("#,###.00");
             this.view.getjTextFieldSalario().setText(String.valueOf(df.format(funcionario.getSalarioBase())));
         }
-    }
-
-    private void clear() {
-        this.view.getjComboBoxCargo().setSelectedIndex(0);
-        this.view.getjComboBoxBonus().setSelectedIndex(0);
-        this.view.getjComboBoxGraduacao().setSelectedIndex(0);
-        this.view.getjTextFieldNome().setText("");
-        this.view.getjTextFieldIdade().setText("");
-        this.view.getjTextFieldSalario().setText("");
-        this.view.getjTextFieldFaltas().setText("");
-        this.view.getjTextFieldAdmissao().setText("");
-        this.view.getjCheckBoxAuxilioTransporte().setSelected(false);
-        ;
     }
 }

@@ -33,6 +33,7 @@ public class BuscarFuncionarioView extends javax.swing.JInternalFrame {
         jButtonNovo = new javax.swing.JButton();
         jButtonHistorico = new javax.swing.JButton();
         jButtonVisualizar = new javax.swing.JButton();
+        jButtonRefresh = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Nome");
@@ -66,6 +67,8 @@ public class BuscarFuncionarioView extends javax.swing.JInternalFrame {
 
         jButtonVisualizar.setText("Visualizar");
 
+        jButtonRefresh.setText("Refresh");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -87,7 +90,9 @@ public class BuscarFuncionarioView extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldNome)
                         .addGap(18, 18, 18)
-                        .addComponent(jButtonBuscar)))
+                        .addComponent(jButtonBuscar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonRefresh)))
                 .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
@@ -97,7 +102,8 @@ public class BuscarFuncionarioView extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonBuscar))
+                    .addComponent(jButtonBuscar)
+                    .addComponent(jButtonRefresh))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -122,6 +128,7 @@ public class BuscarFuncionarioView extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButtonFechar;
     private javax.swing.JButton jButtonHistorico;
     private javax.swing.JButton jButtonNovo;
+    private javax.swing.JButton jButtonRefresh;
     private javax.swing.JButton jButtonVisualizar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -155,5 +162,9 @@ public class BuscarFuncionarioView extends javax.swing.JInternalFrame {
 
     public JTextField getjTextFieldNome() {
         return jTextFieldNome;
+    }
+
+    public JButton getjButtonRefresh() {
+        return jButtonRefresh;
     }
 }

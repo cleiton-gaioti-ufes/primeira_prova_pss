@@ -15,7 +15,6 @@ import java.time.format.DateTimeParseException;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
-import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -28,12 +27,12 @@ public class CalcularSalarioPresenter {
     private final DefaultTableModel tableModelFuncionarios;
     private final FuncionarioDAO funcionarioDAO;
     private final BonusDAO bonusDAO;
-    private final JToggleButton btnLog;
+    private final int log;
 
-    public CalcularSalarioPresenter(JDesktopPane desktop, JToggleButton btnLog) {
+    public CalcularSalarioPresenter(JDesktopPane desktop, int log) {
         this.funcionarioDAO = new FuncionarioDAO();
         this.bonusDAO = new BonusDAO();
-        this.btnLog = btnLog;
+        this.log = log;
         
         try {
             
@@ -43,7 +42,7 @@ public class CalcularSalarioPresenter {
             
             JOptionPane.showMessageDialog(view, "Falha ao consultar funcionario: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 
-            PersistenciaLog.gravarFalha(btnLog.isSelected(), "Falha ao consultar funcionario");
+            PersistenciaLog.gravarFalha(log, "Falha ao consultar funcionario");
             
         }
         
@@ -71,7 +70,7 @@ public class CalcularSalarioPresenter {
             } catch (HeadlessException | SQLException ex) {
                 JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 
-                PersistenciaLog.gravarFalha(btnLog.isSelected(), ex.getMessage());
+                PersistenciaLog.gravarFalha(log, ex.getMessage());
             }
         });
 
@@ -147,7 +146,7 @@ public class CalcularSalarioPresenter {
             }
         });
 
-        PersistenciaLog.gravarCalculoDeSalarioFuncionario(btnLog.isSelected(), this.funcionarios);
+        PersistenciaLog.gravarCalculoDeSalarioFuncionario(log, this.funcionarios);
 
         view.getjTableCalcularSalarios().setModel(tableModelFuncionarios);
         

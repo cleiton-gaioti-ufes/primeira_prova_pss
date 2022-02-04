@@ -1,9 +1,10 @@
 package com.gestaodefuncionarios.view;
 
 import javax.swing.JDesktopPane;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextPane;
-import javax.swing.JToggleButton;
 
 public class PrincipalView extends javax.swing.JFrame {
 
@@ -21,13 +22,15 @@ public class PrincipalView extends javax.swing.JFrame {
         jTextPanePersistencia = new javax.swing.JTextPane();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextPaneQtdFuncionarios = new javax.swing.JTextPane();
-        jToggleButtonPersistencia = new javax.swing.JToggleButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenuFuncionario = new javax.swing.JMenu();
         jMenuItemBuscar = new javax.swing.JMenuItem();
         jMenuItemNovo = new javax.swing.JMenuItem();
         jMenuSalario = new javax.swing.JMenu();
         jMenuItemCalcular = new javax.swing.JMenuItem();
+        jMenuConfiguracoes = new javax.swing.JMenu();
+        jRadioButtonMenuItemLogTxt = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItemLogJson = new javax.swing.JRadioButtonMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de gestão de pessoas");
@@ -56,8 +59,6 @@ public class PrincipalView extends javax.swing.JFrame {
         jTextPaneQtdFuncionarios.setText("Funcionários cadastrados: ");
         jScrollPane3.setViewportView(jTextPaneQtdFuncionarios);
 
-        jToggleButtonPersistencia.setText("Txt");
-
         jMenuFuncionario.setText("Funcionário");
 
         jMenuItemBuscar.setText("Buscar");
@@ -75,6 +76,18 @@ public class PrincipalView extends javax.swing.JFrame {
 
         jMenuBar2.add(jMenuSalario);
 
+        jMenuConfiguracoes.setText("Configurações");
+
+        jRadioButtonMenuItemLogTxt.setSelected(true);
+        jRadioButtonMenuItemLogTxt.setText("Log em txt");
+        jMenuConfiguracoes.add(jRadioButtonMenuItemLogTxt);
+
+        jRadioButtonMenuItemLogJson.setSelected(true);
+        jRadioButtonMenuItemLogJson.setText("Log em json");
+        jMenuConfiguracoes.add(jRadioButtonMenuItemLogJson);
+
+        jMenuBar2.add(jMenuConfiguracoes);
+
         setJMenuBar(jMenuBar2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -83,13 +96,11 @@ public class PrincipalView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(desktop)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButtonPersistencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane3))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,8 +110,7 @@ public class PrincipalView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButtonPersistencia)))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
@@ -109,18 +119,20 @@ public class PrincipalView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktop;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenu jMenuConfiguracoes;
     private javax.swing.JMenu jMenuFuncionario;
     private javax.swing.JMenuItem jMenuItemBuscar;
     private javax.swing.JMenuItem jMenuItemCalcular;
     private javax.swing.JMenuItem jMenuItemNovo;
     private javax.swing.JMenu jMenuSalario;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemLogJson;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemLogTxt;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTextPane jTextPanePersistencia;
     private javax.swing.JTextPane jTextPaneQtdFuncionarios;
-    private javax.swing.JToggleButton jToggleButtonPersistencia;
     // End of variables declaration//GEN-END:variables
 
     public JMenuItem getjMenuItemBuscar() {
@@ -147,7 +159,15 @@ public class PrincipalView extends javax.swing.JFrame {
         return jTextPaneQtdFuncionarios;
     }
 
-    public JToggleButton getjToggleButtonPersistencia() {
-        return jToggleButtonPersistencia;
+    public JRadioButtonMenuItem getjRadioButtonMenuItemLogJson() {
+        return jRadioButtonMenuItemLogJson;
+    }
+
+    public JRadioButtonMenuItem getjRadioButtonMenuItemLogTxt() {
+        return jRadioButtonMenuItemLogTxt;
+    }
+
+    public JMenu getjMenuConfiguracoes() {
+        return jMenuConfiguracoes;
     }
 }

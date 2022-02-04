@@ -33,6 +33,25 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenuConfiguracoes">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Configura&#xe7;&#xf5;es"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jRadioButtonMenuItemLogTxt">
+              <Properties>
+                <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" value="Log em txt"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jRadioButtonMenuItemLogJson">
+              <Properties>
+                <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" value="Log em json"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
       </SubComponents>
     </Menu>
   </NonVisualComponents>
@@ -63,13 +82,11 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="desktop" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
-              <Component id="jScrollPane2" min="-2" pref="210" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jScrollPane4" min="-2" max="-2" attributes="0"/>
+              <Component id="jScrollPane2" min="-2" pref="300" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jToggleButtonPersistencia" max="32767" attributes="0"/>
+              <Component id="jScrollPane4" min="-2" pref="300" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane3" min="-2" pref="210" max="-2" attributes="0"/>
+              <Component id="jScrollPane3" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -82,7 +99,6 @@
                   <Component id="jScrollPane2" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Component id="jScrollPane3" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Component id="jScrollPane4" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="jToggleButtonPersistencia" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -149,10 +165,5 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JToggleButton" name="jToggleButtonPersistencia">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Txt"/>
-      </Properties>
-    </Component>
   </SubComponents>
 </Form>

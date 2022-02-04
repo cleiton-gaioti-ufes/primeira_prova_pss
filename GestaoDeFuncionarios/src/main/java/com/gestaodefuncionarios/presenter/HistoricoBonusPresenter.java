@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
-import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +23,7 @@ public class HistoricoBonusPresenter {
     private final DefaultTableModel tableModelHistorico;
     private final FuncionarioDAO funcionarioDAO;
 
-    public HistoricoBonusPresenter(JDesktopPane desktop, int idFuncionario, JToggleButton btnLog) {
+    public HistoricoBonusPresenter(JDesktopPane desktop, int idFuncionario, int log) {
         this.view = new HistoricoBonusView();
 
         funcionarioDAO = new FuncionarioDAO();
@@ -87,7 +86,7 @@ public class HistoricoBonusPresenter {
             
             JOptionPane.showMessageDialog(view, "Falha ao consultar funcionario: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 
-            PersistenciaLog.gravarFalha(btnLog.isSelected(), "Falha ao consultar funcionario");
+            PersistenciaLog.gravarFalha(log, "Falha ao consultar funcionario");
         }
 
         view.setSize(690, 400);

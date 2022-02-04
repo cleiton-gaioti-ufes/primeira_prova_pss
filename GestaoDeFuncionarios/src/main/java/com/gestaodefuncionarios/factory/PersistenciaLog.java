@@ -29,54 +29,54 @@ public abstract class PersistenciaLog {
         persistenciaLog.gravarFalha(erro);
     }
 
-    public static void gravarCriacaoFuncionario(boolean json, String nome) {
-        if (json) {
+    public static void gravarCriacaoFuncionario(int log, String nome) {
+        if (log == 1) {
             gravarCriacaoFuncionario(new PersistenciaLogJson(), nome);
         } else {
             gravarCriacaoFuncionario(new PersistenciaLogTxt(), nome);
         }
     }
 
-    public static void gravarRemocaoFuncionario(boolean json, String nome) {
-        if (json) {
+    public static void gravarRemocaoFuncionario(int log, String nome) {
+        if (log == 1) {
             gravarRemocaoFuncionario(new PersistenciaLogJson(), nome);
         } else {
             gravarRemocaoFuncionario(new PersistenciaLogTxt(), nome);
         }
     }
 
-    public static void gravarAlteracaoFuncionario(boolean json, String nome) {
-        if (json) {
+    public static void gravarAlteracaoFuncionario(int log, String nome) {
+        if (log == 1) {
             gravarAlteracaoFuncionario(new PersistenciaLogJson(), nome);
         } else {
             gravarAlteracaoFuncionario(new PersistenciaLogTxt(), nome);
         }
     }
 
-    public static void gravarConsultaBonusFuncionario(boolean json, String nome) {
-        if (json) {
+    public static void gravarConsultaBonusFuncionario(int log, String nome) {
+        if (log == 1) {
             gravarConsultaBonusFuncionario(new PersistenciaLogJson(), nome);
         } else {
             gravarConsultaBonusFuncionario(new PersistenciaLogTxt(), nome);
         }
     }
 
-    public static void gravarCalculoDeSalarioFuncionario(boolean json, FuncionarioCollection funcionarios) {
+    public static void gravarCalculoDeSalarioFuncionario(int log, FuncionarioCollection funcionarios) {
         var nomes = "\t";
 
         for(Funcionario f : funcionarios.getFuncionarios()) {
             nomes += f.getNome() + "\n\t";
         }
 
-        if (json) {
+        if (log == 1) {
             gravarCalculoDeSalarioFuncionario(new PersistenciaLogJson(), nomes);
         } else {
             gravarCalculoDeSalarioFuncionario(new PersistenciaLogTxt(), nomes);
         }
     }
 
-    public static void gravarFalha(boolean json, String erro) {
-        if (json) {
+    public static void gravarFalha(int log, String erro) {
+        if (log == 1) {
             gravarFalha(new PersistenciaLogJson(), erro);
         } else {
             gravarFalha(new PersistenciaLogTxt(), erro);

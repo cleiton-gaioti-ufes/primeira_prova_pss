@@ -12,6 +12,8 @@ import javax.swing.JOptionPane;
 public class PrincipalPresenter {
 
     private static PrincipalView view;
+    private static int qtd;
+    private static int log; // 0 - text; 1 - json
 
     public static void main(String[] args) throws ClassNotFoundException {
         view = new PrincipalView();
@@ -22,15 +24,15 @@ public class PrincipalPresenter {
         
         ConnectionSQLite.checkDiretorioDb();
 
-        var qtd = 0;
+        qtd = 0;
+
+        view.getjRadioButtonMenuItemLogJson().setSelected(false);
 
         try {
 
             FuncionarioDAO.createTableFuncionarios();
 
             BonusDAO.createTableBonus();
-
-            qtd = FuncionarioDAO.countFuncionarios();
 
         } catch (SQLException ex) {
 
@@ -41,35 +43,64 @@ public class PrincipalPresenter {
         }
 
         view.getjMenuItemBuscar().addActionListener((ActionEvent e) -> {
-            new BuscarFuncionarioPresenter(view.getDesktop(), view.getjToggleButtonPersistencia());
+            new BuscarFuncionarioPresenter(view.getDesktop(), log);
         });
 
         view.getjMenuItemCalcular().addActionListener((ActionEvent e) -> {
-            new CalcularSalarioPresenter(view.getDesktop(), view.getjToggleButtonPersistencia());
+            new CalcularSalarioPresenter(view.getDesktop(), log);
         });
 
         view.getjMenuItemNovo().addActionListener((e) -> {
-            new ManterFuncionarioPresenter(view.getDesktop(), view.getjToggleButtonPersistencia());
+            new ManterFuncionarioPresenter(view.getDesktop(), log);
         });
 
-        view.getjToggleButtonPersistencia().addActionListener(e -> {
+        view.getjRadioButtonMenuItemLogJson().addActionListener(e -> {
+            if(view.getjRadioButtonMenuItemLogJson().isSelected()) {
+                log = 1;
+                view.getjTextPanePersistencia().setText("Persistência de log em json");
+                view.getjRadioButtonMenuItemLogTxt().setSelected(false);
+                
+                var frames = view.getDesktop().getAllFrames();
 
-            if(view.getjToggleButtonPersistencia().isSelected()) {
+                for(int i = 0; i < frames.length; i++) {
+                    frames[i].dispose();
+                }
+            }
+        });
 
-                view.getjToggleButtonPersistencia().setText("Json");
+        view.getjRadioButtonMenuItemLogTxt().addActionListener(e -> {
+            if(view.getjRadioButtonMenuItemLogTxt().isSelected()){
+                log = 0;
+                view.getjTextPanePersistencia().setText("Persistência de log em txt");
+                view.getjRadioButtonMenuItemLogJson().setSelected(false);
 
-            } else {
+                var frames = view.getDesktop().getAllFrames();
 
-                view.getjToggleButtonPersistencia().setText("Txt");
+                for(int i = 0; i < frames.length; i++) {
+                    frames[i].dispose();
+                }
 
             }
         });
 
-        view.getjTextPaneQtdFuncionarios().setText("Funcionários cadastrados: " + qtd);
-        view.getjTextPanePersistencia().setText("Persistência de log em");
-        
+        atualizarQuantidade();
+        view.getjTextPanePersistencia().setText("Persistência de log em txt");
+
         view.setSize(1400, 900);
         view.setVisible(true);
         view.setLocationRelativeTo(view.getParent());
+    }
+
+    public static void atualizarQuantidade() {
+        try {
+
+            qtd = FuncionarioDAO.countFuncionarios();
+
+        } catch (SQLException ex) {
+
+            JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+
+        view.getjTextPaneQtdFuncionarios().setText("Funcionários cadastrados: " + qtd);
     }
 }

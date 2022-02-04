@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
-import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -22,16 +21,16 @@ public class BuscarFuncionarioPresenter {
     private final DefaultTableModel tableModelFuncionarios;
     private final FuncionarioDAO funcionarioDAO;
     private final JDesktopPane desktop;
-    private final JToggleButton btnLog;
+    private final int log;
 
-    public BuscarFuncionarioPresenter(JDesktopPane desktop, JToggleButton btnLog) {
+    public BuscarFuncionarioPresenter(JDesktopPane desktop, int log) {
         this.funcionarioDAO = new FuncionarioDAO();
 
         this.view = new BuscarFuncionarioView();
 
         this.desktop = desktop;
 
-        this.btnLog = btnLog;
+        this.log = log;
 
         try {
 
@@ -41,14 +40,13 @@ public class BuscarFuncionarioPresenter {
 
             JOptionPane.showMessageDialog(view, "Erro ao consultar funcionários");
 
-            PersistenciaLog.gravarFalha(btnLog.isSelected(), "Erro ao consultar funcionários");
+            PersistenciaLog.gravarFalha(log, "Erro ao consultar funcionários");
         }
 
         this.tableModelFuncionarios = new DefaultTableModel(
                 new Object[][] {},
-                new String[] {"ID", "Nome", "Idade", "Função", "Salário Base (R$)" }
-        ) {
-            
+                new String[] { "ID", "Nome", "Idade", "Função", "Salário Base (R$)" }) {
+
             @Override
             public boolean isCellEditable(final int row, final int column) {
                 return false;
@@ -70,11 +68,15 @@ public class BuscarFuncionarioPresenter {
         });
 
         view.getjButtonNovo().addActionListener((e) -> {
-            new ManterFuncionarioPresenter(view.getDesktopPane(), this.btnLog);
+            new ManterFuncionarioPresenter(view.getDesktopPane(), log);
         });
 
         view.getjButtonVisualizar().addActionListener((e) -> {
             visualizar();
+        });
+
+        view.getjButtonRefresh().addActionListener(e -> {
+            carregarTabela();
         });
 
         view.setSize(690, 550);
@@ -90,37 +92,47 @@ public class BuscarFuncionarioPresenter {
 
         DecimalFormat df = new DecimalFormat("#,###.00");
 
-        this.funcionarios.getFuncionarios().forEach(f -> {
-            tableModelFuncionarios.addRow(
-                    new Object[] {
-                            f.getId(),
-                            f.getNome(),
-                            f.getIdade(),
-                            f.getCargoString(),
-                            df.format(f.getSalarioBase())
-                    });
-        });
+        try {
+            this.funcionarios = funcionarioDAO.getFuncionarios();
 
-        DefaultTableCellRenderer centro = new DefaultTableCellRenderer();
-        centro.setHorizontalAlignment(SwingConstants.CENTER);
+            this.funcionarios.getFuncionarios().forEach(f -> {
+                tableModelFuncionarios.addRow(
+                        new Object[] {
+                                f.getId(),
+                                f.getNome(),
+                                f.getIdade(),
+                                f.getCargoString(),
+                                df.format(f.getSalarioBase())
+                        });
+            });
 
-        DefaultTableCellRenderer right = new DefaultTableCellRenderer();
-        right.setHorizontalAlignment(SwingConstants.RIGHT);
+            DefaultTableCellRenderer centro = new DefaultTableCellRenderer();
+            centro.setHorizontalAlignment(SwingConstants.CENTER);
 
-        DefaultTableCellRenderer left = new DefaultTableCellRenderer();
-        left.setHorizontalAlignment(SwingConstants.LEFT);
+            DefaultTableCellRenderer right = new DefaultTableCellRenderer();
+            right.setHorizontalAlignment(SwingConstants.RIGHT);
 
-        this.view.getjTableFuncionarios().setModel(tableModelFuncionarios);
-        this.view.getjTableFuncionarios().getColumnModel().getColumn(0).setCellRenderer(right);
-        this.view.getjTableFuncionarios().getColumnModel().getColumn(1).setCellRenderer(left);
-        this.view.getjTableFuncionarios().getColumnModel().getColumn(2).setCellRenderer(centro);
-        this.view.getjTableFuncionarios().getColumnModel().getColumn(3).setCellRenderer(left);
-        this.view.getjTableFuncionarios().getColumnModel().getColumn(4).setCellRenderer(right);
+            DefaultTableCellRenderer left = new DefaultTableCellRenderer();
+            left.setHorizontalAlignment(SwingConstants.LEFT);
+
+            this.view.getjTableFuncionarios().setModel(tableModelFuncionarios);
+            this.view.getjTableFuncionarios().getColumnModel().getColumn(0).setCellRenderer(right);
+            this.view.getjTableFuncionarios().getColumnModel().getColumn(1).setCellRenderer(left);
+            this.view.getjTableFuncionarios().getColumnModel().getColumn(2).setCellRenderer(centro);
+            this.view.getjTableFuncionarios().getColumnModel().getColumn(3).setCellRenderer(left);
+            this.view.getjTableFuncionarios().getColumnModel().getColumn(4).setCellRenderer(right);
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(view, "Falha ao consultar funcionarios: " + e.getMessage(), "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+
+            PersistenciaLog.gravarFalha(log, "Erro ao consultar funcionários");
+        }
     }
 
     private void buscar() {
         var nome = this.view.getjTextFieldNome().getText();
-        
+
         try {
 
             if (nome.isBlank() || nome.isEmpty()) {
@@ -140,14 +152,14 @@ public class BuscarFuncionarioPresenter {
             JOptionPane.showMessageDialog(view, "Falha ao consultar funcionario: " + ex.getMessage(), "Erro",
                     JOptionPane.ERROR_MESSAGE);
 
-            PersistenciaLog.gravarFalha(btnLog.isSelected(), "Erro ao consultar funcionários");
+            PersistenciaLog.gravarFalha(log, "Erro ao consultar funcionários");
         }
     }
 
     private void historico() {
         var row = this.view.getjTableFuncionarios().getSelectedRow();
 
-        if(row == -1) {
+        if (row == -1) {
 
             JOptionPane.showMessageDialog(view, "Selecione uma linha!");
 
@@ -155,9 +167,10 @@ public class BuscarFuncionarioPresenter {
 
             var id = Integer.parseInt(this.view.getjTableFuncionarios().getValueAt(row, 0).toString());
 
-            new HistoricoBonusPresenter(desktop, id, btnLog);
+            new HistoricoBonusPresenter(desktop, id, log);
 
-            PersistenciaLog.gravarConsultaBonusFuncionario(btnLog.isSelected(), this.view.getjTableFuncionarios().getValueAt(row, 1).toString());
+            PersistenciaLog.gravarConsultaBonusFuncionario(log,
+                    this.view.getjTableFuncionarios().getValueAt(row, 1).toString());
         }
     }
 
@@ -171,19 +184,20 @@ public class BuscarFuncionarioPresenter {
         } else {
 
             var id = Integer.parseInt(this.view.getjTableFuncionarios().getValueAt(row, 0).toString());
-            
+
             try {
 
                 var funcionario = funcionarioDAO.getFuncionarioById(id);
 
-                new ManterFuncionarioPresenter(this.desktop, funcionario, this.btnLog);
+                new ManterFuncionarioPresenter(this.desktop, funcionario, log);
 
+                carregarTabela();
             } catch (SQLException ex) {
 
                 JOptionPane.showMessageDialog(view, "Falha ao consultar funcionario: " + ex.getMessage(), "Erro",
                         JOptionPane.ERROR_MESSAGE);
 
-                PersistenciaLog.gravarFalha(btnLog.isSelected(), "Falha ao consultar funcionario");
+                PersistenciaLog.gravarFalha(log, "Falha ao consultar funcionario");
 
             }
 
